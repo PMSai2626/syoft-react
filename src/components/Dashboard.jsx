@@ -1,4 +1,3 @@
-import React from 'react';
 
 const Dashboard = () => {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -44,10 +43,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Footer Section (Optional) */}
-      <footer className="mt-auto bg-gray-200 py-4 w-full text-center">
-        <p>&copy; 2024 Your Company. All rights reserved.</p>
-      </footer>
+     
     </div>
   );
 };

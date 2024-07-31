@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
     user_firstname: '',
+    user_lastname: '',
     user_email: '',
     user_phone: '',
-    user_password: ''
+    user_password: '',
+    termsAccepted: false
   });
 
   const navigate = useNavigate();
@@ -21,11 +23,22 @@ const SignUp = () => {
     });
   };
 
+  const handleCheckboxChange = (e) => {
+    setFormData({
+      ...formData,
+      termsAccepted: e.target.checked
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.termsAccepted) {
+      toast.error('You must accept the terms and conditions.');
+      return;
+    }
+
     const data = {
       ...formData,
-      user_lastname: 'ni',
       user_city: 'Hyderabad',
       user_zipcode: '500072'
     };
@@ -38,7 +51,7 @@ const SignUp = () => {
       }
     } catch (error) {
       console.error('Error during registration:', error);
-      toast.error('Sign Up Failed!');
+      toast.error('Sign Up Failed! Please check your details and try again.');
     }
   };
 
@@ -57,8 +70,17 @@ const SignUp = () => {
             <input
               type="text"
               name="user_firstname"
-              placeholder="Name"
+              placeholder="First Name"
               value={formData.user_firstname}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-300 rounded-lg"
+            />
+            <input
+              type="text"
+              name="user_lastname"
+              placeholder="Last Name"
+              value={formData.user_lastname}
               onChange={handleChange}
               required
               className="w-full p-3 border border-gray-300 rounded-lg"
@@ -90,9 +112,21 @@ const SignUp = () => {
               required
               className="w-full p-3 border border-gray-300 rounded-lg"
             />
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                name="termsAccepted"
+                checked={formData.termsAccepted}
+                onChange={handleCheckboxChange}
+                required
+                className="mr-2"
+              />
+              <label htmlFor="termsAccepted" className="text-gray-700">I accept the terms and conditions</label>
+            </div>
             <button type="submit" className="w-full px-4 py-3 font-bold text-white bg-orange-500 rounded-lg hover:bg-orange-700 transition-all duration-300">
               Sign Up
             </button>
+            <p>Already have an account? <Link to='/login' className="text-orange-500">Login</Link></p>
           </form>
         </div>
       </div>

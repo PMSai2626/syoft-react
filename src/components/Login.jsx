@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
@@ -30,7 +31,7 @@ const Login = () => {
       }
     } catch (error) {
       console.error('Error during login:', error);
-      toast.error('Login Failed!');
+      toast.error('Login Failed! Please check your email and password.');
     }
   };
 
@@ -67,6 +68,7 @@ const Login = () => {
             <button type="submit" className="w-full px-4 py-3 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-700 transition-all duration-300">
               Log In
             </button>
+            <p>Don't have an account? <Link to='/signup' className="text-blue-500">Sign up</Link></p>
           </form>
         </div>
       </div>
